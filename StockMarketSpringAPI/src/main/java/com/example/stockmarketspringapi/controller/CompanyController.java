@@ -26,5 +26,8 @@ public class CompanyController {
         return ResponseEntity.status(HttpStatus.CREATED).body(companyService.postCompany(companyDto));
     }
 
-
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateCompany(@PathVariable Long id, CompanyDto companyDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(companyService.editCompany(id, companyDto));
+    }
 }

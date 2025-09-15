@@ -7,7 +7,10 @@ import com.example.stockmarketspringapi.model.entity.Company;
 import com.example.stockmarketspringapi.repository.CompanyRepository;
 import com.example.stockmarketspringapi.service.interfaces.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -42,7 +45,17 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public CompanyDto editCompany(Long id, CompanyDto companyDto) {
-        return null;
+        Company company = companyRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found with id " + id));
+
+        company.setName(companyDto.getName());
+        company.setCountry(companyDto.getCountry());
+        company.setSymbol(companyDto.getSymbol());
+        company.setWebsite(companyDto.getWebsite());
+        company.setEmail(companyDto.getEmail());
+
+        companyRepository.save(company);
+        return convertToCompanyDto(company);
     }
 
     @Override
