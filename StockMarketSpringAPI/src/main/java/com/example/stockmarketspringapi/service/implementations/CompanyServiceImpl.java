@@ -34,7 +34,10 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public CompanyDto postCompany(CompanyDto companyDto) {
-        return null;
+        Company company = dtoToEntityMapper.companyDtoToEntity(companyDto);
+
+        Company savedCompany = companyRepository.save(company);
+        return convertToCompanyDto(savedCompany);
     }
 
     @Override

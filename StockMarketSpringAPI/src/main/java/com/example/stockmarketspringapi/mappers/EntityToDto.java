@@ -9,6 +9,7 @@ public class EntityToDto {
     public CompanyDto convertToCompanyDto(Company company){
         CompanyDto companyDto = new CompanyDto();
 
+        companyDto.setId(company.getId());
         companyDto.setName(company.getName());
         companyDto.setCountry(company.getCountry());
         companyDto.setSymbol(company.getSymbol());

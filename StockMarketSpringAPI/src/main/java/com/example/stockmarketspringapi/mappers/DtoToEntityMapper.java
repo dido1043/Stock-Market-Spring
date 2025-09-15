@@ -8,8 +8,9 @@ import com.example.stockmarketspringapi.model.entity.Stock;
 import java.time.LocalDateTime;
 
 public class DtoToEntityMapper {
-    public static Company companyDtoToEntity(CompanyDto companyDto) {
+    public  Company companyDtoToEntity(CompanyDto companyDto) {
         Company company = new Company();
+
 
         company.setName(companyDto.getName());
         company.setCountry(companyDto.getCountry());
@@ -20,7 +21,7 @@ public class DtoToEntityMapper {
 
         return company;
     }
-    public static Stock stockDtoToEntity(StockDto stockDto) {
+    public  Stock stockDtoToEntity(StockDto stockDto) {
         return null;
     }
 }
