@@ -60,7 +60,10 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Company getCompany(Long id) {
-        return null;
+
+        Company company = companyRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found with id " + id));
+        return company;
     }
 
     private CompanyDto convertToCompanyDto(Company company)

@@ -3,6 +3,7 @@ package com.example.stockmarketspringapi.controller;
 import com.example.stockmarketspringapi.model.dto.CompanyDto;
 import com.example.stockmarketspringapi.service.interfaces.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
