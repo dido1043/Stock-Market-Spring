@@ -6,9 +6,9 @@ import com.example.stockmarketspringapi.model.entity.Company;
 import com.example.stockmarketspringapi.repository.CompanyRepository;
 import com.example.stockmarketspringapi.service.interfaces.CompanyService;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -22,7 +22,7 @@ public class CompanyServiceUnitTest {
     @Autowired
     CompanyRepository companyRepository;
 
-    @Autowired
+    @Mock
     CompanyService companyService;
     @Test
     public void editCompany() {

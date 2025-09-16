@@ -29,6 +29,8 @@ dependencies {
     implementation 'io.swagger.core.v3:swagger-models:2.2.21'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'io.github.cdimascio:java-dotenv:5.2.2'
+
+
     testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
     testImplementation 'org.testcontainers:postgresql'
@@ -39,6 +41,7 @@ dependencies {
     testImplementation platform('org.testcontainers:testcontainers-bom:1.20.2')
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
     testImplementation 'org.testcontainers:postgresql'
+    testImplementation 'org.mockito:mockito-core'
 }
 
 tasks.named('test') {
