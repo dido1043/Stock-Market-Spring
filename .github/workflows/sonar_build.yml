@@ -33,7 +33,7 @@ jobs:
           chmod +x gradlew || true
 
       - name: Run tests with coverage
-        run: bash ./gradlew test jacocoTestReport 
+        run: bash ./gradlew clean test 
 
       - name: SonarCloud scan
         uses: SonarSource/sonarqube-scan-action@v5.3.1
