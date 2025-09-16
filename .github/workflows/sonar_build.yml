@@ -65,7 +65,7 @@ jobs:
           args: >
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.organization=dido1043
-            -Dsonar.projectKey=dido1043_StockMarket
+            -Dsonar.projectKey=dido1043_Stock-Market-Spring
             -Dsonar.projectBaseDir=StockMarketSpringAPI
             -Dsonar.sources=src/main
             -Dsonar.tests=src/test
