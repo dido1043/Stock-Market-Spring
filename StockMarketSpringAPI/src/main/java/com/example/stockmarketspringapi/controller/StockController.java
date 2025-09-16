@@ -19,7 +19,7 @@ public class StockController {
         this.stockService = stockService;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/company-stocks/{id}")
     public ResponseEntity<?> getStock(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(stockService.getStock(id));
     }
