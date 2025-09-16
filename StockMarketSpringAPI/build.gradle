@@ -57,7 +57,6 @@ sonar {
 test {
     useJUnitPlatform()
     finalizedBy jacocoTestReport
-    systemProperty "java.util.logging.manager", "org.jboss.logmanager.LogManager"
     jacoco {
         includes = ['com.example.*']
     }
