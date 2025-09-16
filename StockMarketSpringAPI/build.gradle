@@ -48,12 +48,6 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
-    doFirst {
-        def mockitoInlineJar = configurations.testRuntimeClasspath.find { it.name.contains("mockito-inline") }
-        if (mockitoInlineJar) {
-            jvmArgs += ["-javaagent:${mockitoInlineJar}"]
-        }
-    }
     finalizedBy jacocoTestReport
     jacoco {
         includes = ['com.example.*']
