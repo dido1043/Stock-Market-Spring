@@ -22,6 +22,7 @@ public class DtoToEntityMapper {
         return company;
     }
     public  Stock stockDtoToEntity(StockDto stockDto) {
+
         return null;
     }
 }
