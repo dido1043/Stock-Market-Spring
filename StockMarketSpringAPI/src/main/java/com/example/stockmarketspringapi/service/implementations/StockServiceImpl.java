@@ -25,7 +25,7 @@ public class StockServiceImpl implements StockService {
     private final StockRepository stockRepository;
     private final EntityToDto  entityToDto;
     private final FinnhubService finnhubService;
-    private final Logger logger = LoggerFactory.getLogger(StockServiceImpl.class);
+
 
     @Autowired
     public StockServiceImpl(CompanyService companyService, StockRepository stockRepository, FinnhubService finnhubService) {
@@ -46,14 +46,12 @@ public class StockServiceImpl implements StockService {
             Stock existing = stockRepository.findFirstByCompanyOrderByCreatedAtDesc(company);
 
             if (existing == null || !isSavedToday(existing)) {
-                logger.info(String.format("Stock found with symbol %s", symbol));
 
                 FinnhubStockDto finnhubStockDto = finnhubService.getApiData(symbol);
 
                 stockDto = entityToDto.convertToStockDto(finnhubStockDto,  company);
                 saveToDb(stockDto, company);
             }else{
-                logger.info("Using existing stock data for {}", symbol);
                 stockDto = entityToDto.mapToDtoForExistingStock(existing, company);
             }
 
