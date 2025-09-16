@@ -43,19 +43,17 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
     testImplementation 'org.testcontainers:postgresql'
     testImplementation 'org.mockito:mockito-core'
+    testImplementation 'org.mockito:mockito-inline:5.2.0'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
-}
-sonar {
-    properties {
-        property "sonar.projectKey", "dido1043_Stock-Market-Spring"
-        property "sonar.organization", "dido1043"
+    doFirst {
+        def mockitoInlineJar = configurations.testRuntimeClasspath.find { it.name.contains("mockito-inline") }
+        if (mockitoInlineJar) {
+            jvmArgs += ["-javaagent:${mockitoInlineJar}"]
+        }
     }
-}
-test {
-    useJUnitPlatform()
     finalizedBy jacocoTestReport
     jacoco {
         includes = ['com.example.*']
