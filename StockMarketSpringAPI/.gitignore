@@ -18,10 +18,36 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
-.idea
+# .idea directory: Only keep project config, code styles, and other relevant files.
+.idea/
+!.idea/codeStyles/
+!.idea/inspectionProfiles/
+!.idea/*.iml
+!.idea/misc.xml
+!.idea/modules.xml
+!.idea/vcs.xml
+!.idea/runConfigurations/
+
+# Ignore user-specific or workspace files
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/httpRequests
+.idea/dataSources/
+.idea/dataSources.ids
+.idea/dataSources.local.xml
+.idea/usage.statistics.xml
+.idea/sonarlint/
+.idea/shelf/
+.idea/.name
+
+# Typical JetBrains IDE file ignores
 *.iws
-*.iml
 *.ipr
+*.idea/
+
+# Node: If your project is a multi-module or you use other JetBrains products, adjust as needed.
+
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
