@@ -37,3 +37,7 @@ out/
 .vscode/
 # Local environment
 .env
+
+
+.idea/modules.xml
+
