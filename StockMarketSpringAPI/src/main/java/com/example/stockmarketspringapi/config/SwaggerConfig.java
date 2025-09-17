@@ -10,8 +10,8 @@ public class SwaggerConfig{
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
-                .info(new Info().title("Spring Boot REST API")
+                .info(new Info().title("Stock Market Spring Version")
                         .version("1.0")
-                        .description("Spring Boot REST API"));
+                        .description("Stock Market Spring Boot REST API"));
     }
 }

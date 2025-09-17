@@ -14,6 +14,7 @@ public class CompanyConfig implements CommandLineRunner {
 
     private final CompanyRepository companyRepository;
 
+
     public CompanyConfig(CompanyRepository companyRepository) {
         this.companyRepository = companyRepository;
     }
