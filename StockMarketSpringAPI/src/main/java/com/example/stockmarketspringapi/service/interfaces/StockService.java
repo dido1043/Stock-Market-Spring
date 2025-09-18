@@ -1,7 +1,7 @@
 package com.example.stockmarketspringapi.service.interfaces;
 
-import com.example.stockmarketspringapi.model.dto.StockDto;
+import com.example.stockmarketspringapi.model.dto.*;
 
 public interface StockService {
-    StockDto getStock(Long companyId);
+    StockResponseDto getStock(Long companyId);
 }
