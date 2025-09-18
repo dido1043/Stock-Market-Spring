@@ -1,5 +1,6 @@
 package com.example.stockmarketspringapi.service.implementations;
 
+import com.example.stockmarketspringapi.exception.NotFoundException;
 import com.example.stockmarketspringapi.mappers.DtoToEntityMapper;
 import com.example.stockmarketspringapi.mappers.EntityToDto;
 import com.example.stockmarketspringapi.model.dto.CompanyDto;
@@ -17,57 +18,55 @@ import java.util.List;
 @Service
 public class CompanyServiceImpl implements CompanyService {
 
-    private final CompanyRepository companyRepository;
-    private EntityToDto entityToDto;
-    private  DtoToEntityMapper dtoToEntityMapper;
-    @Autowired
-    public CompanyServiceImpl(CompanyRepository companyRepository) {
-        this.companyRepository = companyRepository;
-        this.entityToDto = new EntityToDto();
-        this.dtoToEntityMapper = new DtoToEntityMapper();
-    }
+  private final CompanyRepository companyRepository;
+  private EntityToDto entityToDto;
+  private DtoToEntityMapper dtoToEntityMapper;
 
-    @Override
-    public List<CompanyDto> getAllCompanies() {
-        return companyRepository.findAll()
-                .stream()
-                .map(this:: convertToCompanyDto)
-                .toList();
-    }
+  @Autowired
+  public CompanyServiceImpl(CompanyRepository companyRepository) {
+    this.companyRepository = companyRepository;
+    this.entityToDto = new EntityToDto();
+    this.dtoToEntityMapper = new DtoToEntityMapper();
+  }
 
-    @Override
-    public CompanyDto postCompany(CompanyDto companyDto) {
-        Company company = dtoToEntityMapper.companyDtoToEntity(companyDto);
+  @Override
+  public List<CompanyDto> getAllCompanies() {
+    return companyRepository.findAll().stream().map(this::convertToCompanyDto).toList();
+  }
 
-        Company savedCompany = companyRepository.save(company);
-        return convertToCompanyDto(savedCompany);
-    }
+  @Override
+  public CompanyDto postCompany(CompanyDto companyDto) {
+    Company company = dtoToEntityMapper.companyDtoToEntity(companyDto);
 
-    @Override
-    public CompanyDto editCompany(Long id, CompanyDto companyDto) {
-        Company company = companyRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found with id " + id));
+    Company savedCompany = companyRepository.save(company);
+    return convertToCompanyDto(savedCompany);
+  }
 
-        company.setName(companyDto.getName());
-        company.setCountry(companyDto.getCountry());
-        company.setSymbol(companyDto.getSymbol());
-        company.setWebsite(companyDto.getWebsite());
-        company.setEmail(companyDto.getEmail());
+  @Override
+  public CompanyDto editCompany(Long id, CompanyDto companyDto) {
+    Company company = companyRepository
+                            .findById(id)
+                            .orElseThrow(() -> new NotFoundException("Invalid company id: " + id));
 
-        companyRepository.save(company);
-        return convertToCompanyDto(company);
-    }
+    company.setName(companyDto.getName());
+    company.setCountry(companyDto.getCountry());
+    company.setSymbol(companyDto.getSymbol());
+    company.setWebsite(companyDto.getWebsite());
+    company.setEmail(companyDto.getEmail());
 
-    @Override
-    public Company getCompany(Long id) {
+    companyRepository.save(company);
+    return convertToCompanyDto(company);
+  }
 
-        Company company = companyRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found with id " + id));
-        return company;
-    }
+  @Override
+  public Company getCompany(Long id) {
 
-    private CompanyDto convertToCompanyDto(Company company)
-    {
-        return entityToDto.convertToCompanyDto(company);
-    }
+    Company company = companyRepository.findById(id)
+             .orElseThrow(() -> new NotFoundException("Invalid company id: " + id));
+    return company;
+  }
+
+  private CompanyDto convertToCompanyDto(Company company) {
+    return entityToDto.convertToCompanyDto(company);
+  }
 }
