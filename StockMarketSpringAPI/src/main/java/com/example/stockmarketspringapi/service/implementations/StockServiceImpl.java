@@ -2,7 +2,6 @@ package com.example.stockmarketspringapi.service.implementations;
 
 import com.example.stockmarketspringapi.RestClient.interfaces.FinnhubService;
 import com.example.stockmarketspringapi.exception.NotFoundException;
-import com.example.stockmarketspringapi.mappers.EntityToDto;
 import com.example.stockmarketspringapi.model.dto.FinnhubStockDto;
 import com.example.stockmarketspringapi.model.dto.StockDto;
 import com.example.stockmarketspringapi.model.dto.StockResponseDto;
@@ -22,7 +21,6 @@ import java.time.LocalDateTime;
 public class StockServiceImpl implements StockService {
   private final CompanyService companyService;
   private final StockRepository stockRepository;
-  private final EntityToDto entityToDto;
   private final FinnhubService finnhubService;
 
   private final ModelMapper mapper;
@@ -35,7 +33,7 @@ public class StockServiceImpl implements StockService {
     this.companyService = companyService;
     this.stockRepository = stockRepository;
     this.finnhubService = finnhubService;
-    this.entityToDto = new EntityToDto();
+
     this.mapper = new ModelMapper();
   }
 

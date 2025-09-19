@@ -2,11 +2,9 @@ package com.example.stockmarketspringapi.config.DbConfig;
 
 import com.example.stockmarketspringapi.model.entity.Company;
 import com.example.stockmarketspringapi.repository.CompanyRepository;
-import com.example.stockmarketspringapi.service.interfaces.CompanyService;
+import java.time.LocalDateTime;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDateTime;
 
 @Component
 public class CompanyConfig implements CommandLineRunner {
