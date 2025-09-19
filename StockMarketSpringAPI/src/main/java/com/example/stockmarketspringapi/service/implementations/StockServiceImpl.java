@@ -67,7 +67,6 @@ public class StockServiceImpl implements StockService {
     Stock stock = new Stock();
 
     stock.setCompany(company);
-    stock.setCompany(company);
     stock.setMarketCapitalization(stockDto.getMarketCapitalization());
     stock.setShareOutstanding(stockDto.getShareOutstanding());
     stock.setCreatedAt(stockDto.getCreatedAt());
