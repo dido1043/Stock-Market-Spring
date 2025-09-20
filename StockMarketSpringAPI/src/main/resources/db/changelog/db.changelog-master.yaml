@@ -67,3 +67,5 @@ databaseChangeLog:
             referencedTableName: company
             referencedColumnNames: id
             constraintName: fk_stocks_company
+databaseChangeLog: []
+

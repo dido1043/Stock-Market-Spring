@@ -4,7 +4,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.7'
     id 'org.sonarqube' version '4.0.0.2929'
     id 'jacoco'
-    id 'org.liquibase.gradle' version '2.2.0'
+    id 'org.liquibase.gradle' version '2.2.1'
 }
 
 group = 'com.example'
@@ -29,7 +29,8 @@ dependencies {
     implementation 'io.swagger.core.v3:swagger-models:2.2.21'
     implementation 'io.github.cdimascio:java-dotenv:5.2.2'
     implementation 'org.modelmapper:modelmapper:2.3.8'
-    implementation 'org.liquibase:liquibase-core:4.20.0'
+    implementation 'org.liquibase:liquibase-core:4.27.0'
+    implementation 'org.liquibase.ext:liquibase-hibernate6:4.27.0'
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
     testImplementation 'org.testcontainers:postgresql'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -39,12 +40,16 @@ dependencies {
     testImplementation 'org.mockito:mockito-core'
     testImplementation 'org.mockito:mockito-inline:5.2.0'
 
-    liquibaseRuntime 'org.liquibase:liquibase-core:4.20.0'
+    liquibaseRuntime 'org.liquibase:liquibase-core:4.27.0'
     liquibaseRuntime 'info.picocli:picocli:4.7.5'
-
     liquibaseRuntime 'org.postgresql:postgresql:42.7.7'
     liquibaseRuntime 'org.hibernate:hibernate-core:6.4.4.Final'
-    liquibaseRuntime 'org.liquibase.ext:liquibase-hibernate6:4.23.2'
+    liquibaseRuntime 'org.liquibase.ext:liquibase-hibernate6:4.27.0'
+    liquibaseRuntime 'org.springframework:spring-core:6.1.6'
+    liquibaseRuntime 'org.springframework:spring-context:6.1.6'
+    liquibaseRuntime 'org.springframework:spring-beans:6.1.6'
+    liquibaseRuntime 'org.springframework:spring-tx:6.1.6'
+    liquibaseRuntime 'org.springframework:spring-orm:6.1.6'
 }
 
 tasks.named('test') {
@@ -82,9 +87,10 @@ liquibase {
             url "jdbc:postgresql://localhost:5431/stock_market_db"
             username "postgres"
             password "dido12"
-            classpath "$rootDir"
+            classpath "build/classes/java/main:build/resources/main"
             driver "org.postgresql.Driver"
-            referenceUrl "hibernate:com.example.stockmarketspringapi.model.entity?dialect=org.hibernate.dialect.PostgreSQLDialect"
+            referenceUrl "hibernate:spring:com.example.stockmarketspringapi.model.entity?dialect=org.hibernate.dialect.PostgreSQLDialect"
+            verbose true
         }
     }
 }
