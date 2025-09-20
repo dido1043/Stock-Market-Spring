@@ -69,3 +69,5 @@ databaseChangeLog:
             constraintName: fk_stocks_company
 databaseChangeLog: []
 
+databaseChangeLog: []
+
