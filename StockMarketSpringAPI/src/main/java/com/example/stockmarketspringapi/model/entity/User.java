@@ -15,7 +15,7 @@ public class User {
     @Column(nullable = false, unique = true, length = 100)
     private String email;
 
-    @Column(nullable = false, length = 255)
+    @Column(name = "password_hash", nullable = false, length = 255)
     private String passwordHash;
 
     public void setId(Long id) {
@@ -42,11 +42,11 @@ public class User {
         this.email = email;
     }
 
-    public String getPasswordHash() {
+    public String getpasswordHash() {
         return passwordHash;
     }
 
-    public void setPasswordHash(String passwordHash) {
+    public void setpasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
     }
 }

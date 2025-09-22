@@ -67,9 +67,27 @@ databaseChangeLog:
             referencedTableName: company
             referencedColumnNames: id
             constraintName: fk_stocks_company
-databaseChangeLog: []
 
-databaseChangeLog: []
-
-databaseChangeLog: []
-
+  - changeSet:
+      id: 3
+      author: dido
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: VARCHAR(255)
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+              - column:
+                  name: passwordHash
+                  type: VARCHAR(255)
