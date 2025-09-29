@@ -1,8 +1,5 @@
 package com.example.stockmarketspringapi.controller;
 
-import com.example.stockmarketspringapi.model.dto.StockDto;
-import com.example.stockmarketspringapi.model.entity.Company;
-import com.example.stockmarketspringapi.model.entity.Stock;
 import com.example.stockmarketspringapi.service.interfaces.StockService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

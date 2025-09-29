@@ -1,20 +1,12 @@
-package com.example.stockmarketspringapi.config;
+package com.example.stockmarketspringapi.config.security;
 
 import com.example.stockmarketspringapi.JwtAuthenticationFilter;
-import com.example.stockmarketspringapi.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -28,10 +20,13 @@ import java.util.List;
 public class SecurityConfiguration {
   private final AuthenticationProvider authenticationProvider;
   private final JwtAuthenticationFilter jwtAuthenticationFilter;
+  private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
   public SecurityConfiguration(
       AuthenticationProvider authenticationProvider,
-      JwtAuthenticationFilter jwtAuthenticationFilter) {
+      JwtAuthenticationFilter jwtAuthenticationFilter,
+      OAuth2SuccessHandler oAuth2SuccessHandler) {
+    this.oAuth2SuccessHandler = oAuth2SuccessHandler;
     this.authenticationProvider = authenticationProvider;
     this.jwtAuthenticationFilter = jwtAuthenticationFilter;
   }
@@ -47,6 +42,7 @@ public class SecurityConfiguration {
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authenticationProvider(authenticationProvider)
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+            .oauth2Login(oAuth2 -> oAuth2.successHandler(oAuth2SuccessHandler))
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
