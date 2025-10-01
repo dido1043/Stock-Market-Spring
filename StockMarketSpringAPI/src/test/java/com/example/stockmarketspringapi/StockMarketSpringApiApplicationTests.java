@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-@SpringBootTest
+@SpringBootTest(classes =  StockMarketSpringApiApplication.class)
 class StockMarketSpringApiApplicationTests {
 
     @Autowired
