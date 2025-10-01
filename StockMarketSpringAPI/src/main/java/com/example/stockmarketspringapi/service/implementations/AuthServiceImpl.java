@@ -31,6 +31,7 @@ public class AuthServiceImpl implements AuthService {
         usr.setUsername(user.getUsername());
         usr.setEmail(user.getEmail());
         usr.setpasswordHash(passwordEncoder.encode(user.getPasswordHash()));
+        usr.setProviderType(ProviderEnum.EMAIL);
         return userRepository.save(usr);
     }
 
@@ -66,14 +67,6 @@ public class AuthServiceImpl implements AuthService {
                     u.setProviderType(ProviderEnum.GOOGLE);
                     return userRepository.save(u);
                 });
-
-//        if (user == null) {
-//            user = new User();
-//            user.setUsername(username);
-//            user.setEmail(email);
-//            user.setProviderType(ProviderEnum.GOOGLE);
-//            userRepository.save(user);
-//        }
         return user;
     }
 }
