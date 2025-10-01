@@ -1,5 +1,6 @@
 package com.example.stockmarketspringapi.model.entity;
 
+import com.example.stockmarketspringapi.model.dto.enums.ProviderEnum;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,8 +21,12 @@ public class User implements UserDetails {
     @Column(nullable = false, unique = true, length = 100)
     private String email;
 
-    @Column(name = "password_hash", nullable = false, length = 255)
+    @Column(name = "password_hash", length = 255)
     private String passwordHash;
+
+    @Column(name = "provider_type" , length = 50)
+    @Enumerated(EnumType.STRING)
+    private ProviderEnum providerType;
 
     public void setId(Long id) {
         this.id = id;
@@ -83,5 +88,13 @@ public class User implements UserDetails {
 
     public void setpasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
+    }
+
+    public ProviderEnum getProviderType() {
+        return providerType;
+    }
+
+    public void setProviderType(ProviderEnum providerType) {
+        this.providerType = providerType;
     }
 }

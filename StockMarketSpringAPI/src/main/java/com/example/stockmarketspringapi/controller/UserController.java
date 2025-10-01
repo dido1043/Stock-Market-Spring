@@ -6,12 +6,13 @@ import com.example.stockmarketspringapi.model.dto.resp.LoginResponse;
 import com.example.stockmarketspringapi.model.entity.User;
 import com.example.stockmarketspringapi.service.JwtService;
 import com.example.stockmarketspringapi.service.interfaces.AuthService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/user")
@@ -41,4 +42,17 @@ public class UserController {
 
     return ResponseEntity.ok(loginResponse);
   }
+
+  @GetMapping("/oauth2/login")
+  public ResponseEntity<?> oAuthLogin(HttpServletResponse httpServletResponse) throws IOException {
+    httpServletResponse.sendRedirect("/oauth2/authorization/google");
+    //User user = authService.oAuthLogin(token);
+    return ResponseEntity.ok("Redirecting...");
+  }
+
+    @GetMapping("/loginSuccess")
+    public ResponseEntity<?> handleGoogleSuccess(OAuth2AuthenticationToken token) throws IOException {
+        User user = authService.oAuthLogin(token);
+        return ResponseEntity.status(200).body(user);
+    }
 }

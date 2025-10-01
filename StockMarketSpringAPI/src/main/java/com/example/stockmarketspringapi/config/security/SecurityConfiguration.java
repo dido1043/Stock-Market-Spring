@@ -20,13 +20,10 @@ import java.util.List;
 public class SecurityConfiguration {
   private final AuthenticationProvider authenticationProvider;
   private final JwtAuthenticationFilter jwtAuthenticationFilter;
-  private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
   public SecurityConfiguration(
       AuthenticationProvider authenticationProvider,
-      JwtAuthenticationFilter jwtAuthenticationFilter,
-      OAuth2SuccessHandler oAuth2SuccessHandler) {
-    this.oAuth2SuccessHandler = oAuth2SuccessHandler;
+      JwtAuthenticationFilter jwtAuthenticationFilter) {
     this.authenticationProvider = authenticationProvider;
     this.jwtAuthenticationFilter = jwtAuthenticationFilter;
   }
@@ -42,7 +39,10 @@ public class SecurityConfiguration {
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authenticationProvider(authenticationProvider)
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-            .oauth2Login(oAuth2 -> oAuth2.successHandler(oAuth2SuccessHandler))
+            .oauth2Login(oAuth2 -> oAuth2
+                    .loginPage("/user/oauth2/login")
+                    .defaultSuccessUrl("/user/loginSuccess", true)
+                    .permitAll())
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
@@ -56,6 +56,7 @@ public class SecurityConfiguration {
     configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
     configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
     configuration.setAllowCredentials(true);
+    configuration.setAllowedOrigins(List.of("*"));
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
     source.registerCorsConfiguration("/**", configuration);
