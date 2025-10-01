@@ -59,15 +59,21 @@ public class AuthServiceImpl implements AuthService {
         String username = oAuth2User.getAttribute("name");
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(null);
+                .orElseGet(() -> {
+                    User u = new User();
+                    u.setUsername(username);
+                    u.setEmail(email);
+                    u.setProviderType(ProviderEnum.GOOGLE);
+                    return userRepository.save(u);
+                });
 
-        if (user == null) {
-            user = new User();
-            user.setUsername(username);
-            user.setEmail(email);
-            user.setProviderType(ProviderEnum.GOOGLE);
-            userRepository.save(user);
-        }
+//        if (user == null) {
+//            user = new User();
+//            user.setUsername(username);
+//            user.setEmail(email);
+//            user.setProviderType(ProviderEnum.GOOGLE);
+//            userRepository.save(user);
+//        }
         return user;
     }
 }

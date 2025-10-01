@@ -1,6 +1,9 @@
 ALTER TABLE users
     ADD provider_type VARCHAR(50);
 
+ALTER TABLE users
+    ALTER COLUMN password_hash
+    DROP NOT NULL;
 ALTER TABLE company
     ALTER COLUMN company_name SET NOT NULL;
 

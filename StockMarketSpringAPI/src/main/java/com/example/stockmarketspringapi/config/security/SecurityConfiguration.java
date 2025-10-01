@@ -36,7 +36,7 @@ public class SecurityConfiguration {
         .authorizeHttpRequests(
             auth -> auth.requestMatchers("/**").permitAll().anyRequest().authenticated())
         .sessionManagement(
-            session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
         .authenticationProvider(authenticationProvider)
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
             .oauth2Login(oAuth2 -> oAuth2
@@ -44,7 +44,7 @@ public class SecurityConfiguration {
                     .defaultSuccessUrl("/user/loginSuccess", true)
                     .permitAll())
         .sessionManagement(
-            session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+            session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
 
     return http.build();
   }
