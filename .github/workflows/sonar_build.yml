@@ -2,9 +2,9 @@ name: SonarCloud
 
 on:
   push:
-    branches: ["**"]
+    branches: ["main"]
   pull_request:
-
+    branches: ["main"]
 permissions:
   contents: read
   pull-requests: read
