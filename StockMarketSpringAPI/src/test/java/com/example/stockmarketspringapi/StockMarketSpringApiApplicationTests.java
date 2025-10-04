@@ -1,5 +1,6 @@
 package com.example.stockmarketspringapi;
 
+import com.example.stockmarketspringapi.config.IntegrationTestConfig;
 import com.example.stockmarketspringapi.controller.CompanyController;
 import com.example.stockmarketspringapi.controller.StockController;
 import com.example.stockmarketspringapi.service.interfaces.CompanyService;
@@ -7,10 +8,12 @@ import com.example.stockmarketspringapi.service.interfaces.StockService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-@SpringBootTest(classes =  StockMarketSpringApiApplication.class)
+@SpringBootTest(classes = StockMarketSpringApiApplication.class)
+@Import(IntegrationTestConfig.class)
 class StockMarketSpringApiApplicationTests {
 
     @Autowired
@@ -32,5 +35,4 @@ class StockMarketSpringApiApplicationTests {
         assertThat(companyController).isNotNull();
         assertThat(stockController).isNotNull();
     }
-
 }
