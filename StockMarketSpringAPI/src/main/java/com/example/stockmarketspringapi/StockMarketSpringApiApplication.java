@@ -10,5 +10,5 @@ StockMarketSpringApiApplication {
     public static void main(String[] args) {
         SpringApplication.run(StockMarketSpringApiApplication.class, args);
     }
-//test
+
 }
