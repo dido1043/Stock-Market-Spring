@@ -5,7 +5,7 @@ public class FinnhubStockDto {
     private String currency;
     private String exchange;
     private String ipo;
-    private long marketCapitalization;
+    private double marketCapitalization;
     private String name;
     private String phone;
     private double shareOutstanding;
@@ -47,11 +47,11 @@ public class FinnhubStockDto {
         this.ipo = ipo;
     }
 
-    public long getMarketCapitalization() {
+    public double getMarketCapitalization() {
         return marketCapitalization;
     }
 
-    public void setMarketCapitalization(long marketCapitalization) {
+    public void setMarketCapitalization(double marketCapitalization) {
         this.marketCapitalization = marketCapitalization;
     }
 
