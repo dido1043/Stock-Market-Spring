@@ -86,7 +86,7 @@ public class StockServiceUnitTest {
         oldStock.setCompany(amd);
         oldStock.setMarketCapitalization(new BigDecimal("240000000000"));
         oldStock.setShareOutstanding(new BigDecimal("1600000000"));
-        oldStock.setCreatedAt(LocalDateTime.now().minusDays(2)); // 2 days old
+        oldStock.setCreatedAt(LocalDateTime.now().minusDays(2));
 
         when(companyService.getCompany(9L)).thenReturn(amd);
         when(stockRepository.findFirstByCompanyOrderByCreatedAtDesc(amd)).thenReturn(oldStock);
