@@ -123,7 +123,7 @@ public class StockServiceUnitTest {
     }
 
     @Test
-    void convertToStockDto_ShouldMapFinnhubDataCorrectly() {
+    void convertToStockDto_MapFinnhubDataCorrectly() {
         StockDto result = stockService.convertToStockDto(finnhubStockDto, amd);
 
         assertNotNull(result);
@@ -134,7 +134,7 @@ public class StockServiceUnitTest {
     }
 
     @Test
-    void mapToDtoForExistingStock_ShouldMapCorrectly() {
+    void mapToDtoForExistingStock_MapCorrectly() {
         StockDto result = stockService.mapToDtoForExistingStock(existingStock, amd);
 
         assertNotNull(result);
