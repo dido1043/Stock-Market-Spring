@@ -33,11 +33,7 @@ public class CompanyControllerTest {
 
     @Test
     public void getAllCompaniesTest() throws Exception {
-//        String url = "http://localhost:8080/company";
-//        ResponseEntity<CompanyDto[]> response = restTemplate.getForEntity(url, CompanyDto[].class);
-//
-//        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-//        assertThat(response.getBody()).isNotNull();
+
     }
 //    addCompany
 //    updateCompany
