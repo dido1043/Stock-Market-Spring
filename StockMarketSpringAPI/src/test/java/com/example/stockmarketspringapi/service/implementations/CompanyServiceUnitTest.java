@@ -1,6 +1,5 @@
-package com.example.stockmarketspringapi.service;
+package com.example.stockmarketspringapi.service.implementations;
 
-import com.example.stockmarketspringapi.StockMarketSpringApiApplication;
 import com.example.stockmarketspringapi.model.dto.CompanyDto;
 import com.example.stockmarketspringapi.model.entity.Company;
 import com.example.stockmarketspringapi.repository.CompanyRepository;
