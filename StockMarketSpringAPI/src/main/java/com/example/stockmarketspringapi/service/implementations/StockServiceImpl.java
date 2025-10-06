@@ -76,6 +76,7 @@ public class StockServiceImpl implements StockService {
   private boolean isSavedToday(Stock stock) {
     return stock.getCreatedAt().toLocalDate().equals(LocalDateTime.now().toLocalDate());
   }
+  @Override
     public StockDto convertToStockDto(FinnhubStockDto stockData, Company company){
         StockDto stockDto = new StockDto();
 
@@ -91,7 +92,7 @@ public class StockServiceImpl implements StockService {
 
         return stockDto;
     }
-
+    @Override
     public StockDto mapToDtoForExistingStock(Stock stock, Company company){
         StockDto stockDto = new StockDto();
 

@@ -10,12 +10,12 @@ import com.example.stockmarketspringapi.model.entity.Company;
 import com.example.stockmarketspringapi.model.entity.Stock;
 import com.example.stockmarketspringapi.repository.StockRepository;
 import com.example.stockmarketspringapi.service.interfaces.CompanyService;
+import com.example.stockmarketspringapi.service.interfaces.StockService;
+import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -24,27 +24,27 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
 public class StockServiceUnitTest {
 
-    @Mock
-    private StockRepository stockRepository;
+    @Autowired
+    StockRepository stockRepository;
 
     @Mock
-    private CompanyService companyService;
+    StockService stockService;
 
-    @Mock
-    private FinnhubService finnhubService;
+    @Autowired
+    CompanyService companyService;
 
-    @InjectMocks
-    private StockServiceImpl stockService;
+    @Autowired
+    FinnhubService finnhubService;
 
     private Company amd;
     private Stock existingStock;
     private FinnhubStockDto finnhubStockDto;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         amd = new Company();
         amd.setId(9L);
         amd.setName("Advanced Micro Devices, Inc.");
@@ -67,7 +67,7 @@ public class StockServiceUnitTest {
     }
 
     @Test
-    void getStockTest_NotFoundCompany() {
+    public void getStockTest_NotFoundCompany() {
         when(companyService.getCompany(999L)).thenReturn(null);
 
         NotFoundException exception = assertThrows(NotFoundException.class,
@@ -79,7 +79,7 @@ public class StockServiceUnitTest {
     }
 
     @Test
-    void getStockTest_ExistingStock_From_Past_Date() {
+    public void getStockTest_ExistingStock_From_Past_Date() {
         Stock oldStock = new Stock();
         oldStock.setId(1L);
         oldStock.setCompany(amd);
@@ -103,7 +103,7 @@ public class StockServiceUnitTest {
     }
 
     @Test
-    void getStockTest_ExistingStock_Saved_Today() {
+    public void getStockTest_ExistingStock_Saved_Today() {
         when(companyService.getCompany(9L)).thenReturn(amd);
         when(stockRepository.findFirstByCompanyOrderByCreatedAtDesc(amd)).thenReturn(existingStock);
 
@@ -122,7 +122,7 @@ public class StockServiceUnitTest {
     }
 
     @Test
-    void convertToStockDto_MapFinnhubDataCorrectly() {
+    public void convertToStockDto_MapFinnhubDataCorrectly() {
         StockDto result = stockService.convertToStockDto(finnhubStockDto, amd);
 
         assertNotNull(result);
@@ -133,7 +133,7 @@ public class StockServiceUnitTest {
     }
 
     @Test
-    void mapToDtoForExistingStock_MapCorrectly() {
+    public void mapToDtoForExistingStock_MapCorrectly() {
         StockDto result = stockService.mapToDtoForExistingStock(existingStock, amd);
 
         assertNotNull(result);
