@@ -47,6 +47,7 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     testImplementation 'org.mockito:mockito-core'
     testImplementation 'org.mockito:mockito-inline:5.2.0'
+    testImplementation 'org.jboss.logmanager:jboss-logmanager:2.1.0.Final'
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
@@ -61,25 +62,29 @@ dependencies {
     liquibaseRuntime 'org.springframework:spring-tx:6.1.6'
     liquibaseRuntime 'org.springframework:spring-orm:6.1.6'
 }
-
-tasks.named('test') {
+test {
     useJUnitPlatform()
-    jvmArgs += ["-XX:+EnableDynamicAgentLoading"]
-    finalizedBy jacocoTestReport
-    jacoco {
-        includes = ['com.example.*']
-    }
+    systemProperty "java.util.logging.manager", "org.jboss.logmanager.LogManager"
 }
+
 jacoco {
-    toolVersion = '0.8.12'
+    toolVersion = '0.8.13'
 }
+
 jacocoTestReport {
     dependsOn test
+    executionData(fileTree(buildDir).include("jacoco/test.exec"))
     reports {
         xml.required = true
         html.required = true
     }
+    classDirectories.setFrom(
+            fileTree('build/classes/java/main') {
+                include '**/*.class'
+            }
+    )
 }
+
 
 sonarqube {
     properties {

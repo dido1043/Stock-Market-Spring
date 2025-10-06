@@ -3,11 +3,12 @@ package com.example.stockmarketspringapi.service.implementations;
 import com.example.stockmarketspringapi.model.dto.CompanyDto;
 import com.example.stockmarketspringapi.model.entity.Company;
 import com.example.stockmarketspringapi.repository.CompanyRepository;
-import com.example.stockmarketspringapi.service.interfaces.CompanyService;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -15,14 +16,14 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class CompanyServiceUnitTest {
 
-    @Autowired
-    CompanyRepository companyRepository;
-
     @Mock
-    CompanyService companyService;
+    private CompanyRepository companyRepository;
+
+    @InjectMocks
+    private CompanyServiceImpl companyService;
     @Test
     public void editCompany() {
         Company existingCompany = new Company();
@@ -118,7 +119,7 @@ public class CompanyServiceUnitTest {
                 .isNotNull()
                 .isCloseTo(LocalDateTime.now(), within(5, ChronoUnit.SECONDS));
 
-        verify(companyRepository).findById(9L);
+        verify(companyRepository).findById(1L);
         verifyNoMoreInteractions(companyRepository);
     }
 

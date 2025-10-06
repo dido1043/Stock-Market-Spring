@@ -1,4 +1,5 @@
 package com.example.stockmarketspringapi.service.implementations;
+
 import com.example.stockmarketspringapi.RestClient.interfaces.FinnhubService;
 import com.example.stockmarketspringapi.exception.NotFoundException;
 import com.example.stockmarketspringapi.model.dto.FinnhubStockDto;
@@ -8,31 +9,32 @@ import com.example.stockmarketspringapi.model.entity.Company;
 import com.example.stockmarketspringapi.model.entity.Stock;
 import com.example.stockmarketspringapi.repository.StockRepository;
 import com.example.stockmarketspringapi.service.interfaces.CompanyService;
-import com.example.stockmarketspringapi.service.interfaces.StockService;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class StockServiceUnitTest {
 
-    @Autowired
+    @Mock
     StockRepository stockRepository;
 
-    @Mock
-    StockService stockService;
+    @InjectMocks
+    StockServiceImpl stockService;
 
-    @Autowired
+    @Mock
     CompanyService companyService;
 
-    @Autowired
+    @Mock
     FinnhubService finnhubService;
 
     private Company amd;
