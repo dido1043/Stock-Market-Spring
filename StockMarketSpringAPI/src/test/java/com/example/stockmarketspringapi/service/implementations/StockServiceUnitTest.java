@@ -1,6 +1,4 @@
 package com.example.stockmarketspringapi.service.implementations;
-
-
 import com.example.stockmarketspringapi.RestClient.interfaces.FinnhubService;
 import com.example.stockmarketspringapi.exception.NotFoundException;
 import com.example.stockmarketspringapi.model.dto.FinnhubStockDto;
@@ -16,10 +14,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
