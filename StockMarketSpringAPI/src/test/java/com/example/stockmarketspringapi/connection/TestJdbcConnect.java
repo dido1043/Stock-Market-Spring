@@ -10,7 +10,7 @@ public class TestJdbcConnect {
         try (Connection c = DriverManager.getConnection(url, user, pass)) {
             System.out.println("Connected OK, autocommit=" + c.getAutoCommit());
         } catch (Exception e) {
-            System.err.println("Connect failed: " + e.getMessage());
+            System.out.println("Connect failed: " + e.getMessage());
             e.printStackTrace();
             System.exit(2);
         }
