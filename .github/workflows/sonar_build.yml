@@ -16,9 +16,9 @@ jobs:
 
     services:
       postgres:
-        image: postgres:16
+        image: postgres:latest
         ports:
-          - 5431:5432
+          - 5432:5432
         env:
           POSTGRES_DB: stock_market_db_test
           POSTGRES_USER: postgres
