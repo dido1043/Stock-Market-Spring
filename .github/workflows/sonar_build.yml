@@ -49,36 +49,8 @@ jobs:
       - name: Wait for PostgreSQL (container)
         run: |
           for i in {1..30}; do
-            pg_isready -h localhost -p 5432 -U postgres && break
-            sleep 1
-          done
-
-      - name: Run tests and generate JaCoCo reports
-        run: |
-          ./gradlew --no-daemon clean test jacocoTestReport
-          echo "Artifacts in build/reports/jacoco/test:"
-          ls -la build/reports/jacoco/test || true
-
-      - name: Show jacoco xml (debug)
-        run: |
-          if [ -f build/reports/jacoco/test/jacocoTestReport.xml ]; then
-            echo "JaCoCo XML exists"
-            wc -l build/reports/jacoco/test/jacocoTestReport.xml || true
-          else
-            echo "ERROR: jacocoTestReport.xml not found"
-            ls -la build/reports/jacoco/test || true
-            exit 1
-          fi
-
-      - name: SonarCloud scan
-        uses: SonarSource/sonarqube-scan-action@v5.3.1
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: >
-            -Dsonar.host.url=https://sonarcloud.io
-            -Dsonar.organization=dido1043
-            -Dsonar.projectKey=dido1043_Stock-Market-Spring
+            pg_isready -h localhost -p 5432 && break
+            -Dsonar.projectBaseDir=.
             -Dsonar.sources=src/main
             -Dsonar.tests=src/test
             -Dsonar.java.binaries=build/classes/java/main
