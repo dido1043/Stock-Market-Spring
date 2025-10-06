@@ -3,6 +3,7 @@ name: SonarCloud
 on:
   pull_request:
     branches: ["main"]
+
 permissions:
   contents: read
   pull-requests: read
@@ -17,24 +18,24 @@ jobs:
     services:
       postgres:
         image: postgres:latest
-        ports:
-          - 5432:5432
         env:
           POSTGRES_DB: stock_market_db_test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: dido12
         options: >-
-          --health-cmd pg_isready
+          --health-cmd "pg_isready -U postgres -d stock_market_db_test"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-java@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '21'
@@ -45,15 +46,29 @@ jobs:
           sed -i 's/\r$//' gradlew
           chmod +x gradlew || true
 
-      - name: Wait for PostgreSQL
+      - name: Wait for PostgreSQL (container)
         run: |
           for i in {1..30}; do
-            pg_isready -h localhost -p 5431 && break
+            pg_isready -h localhost -p 5432 -U postgres && break
             sleep 1
           done
 
-      - name: Run tests with coverage
-        run: bash ./gradlew test jacocoTestReport 
+      - name: Run tests and generate JaCoCo reports
+        run: |
+          ./gradlew --no-daemon clean test jacocoTestReport
+          echo "Artifacts in build/reports/jacoco/test:"
+          ls -la build/reports/jacoco/test || true
+
+      - name: Show jacoco xml (debug)
+        run: |
+          if [ -f build/reports/jacoco/test/jacocoTestReport.xml ]; then
+            echo "JaCoCo XML exists"
+            wc -l build/reports/jacoco/test/jacocoTestReport.xml || true
+          else
+            echo "ERROR: jacocoTestReport.xml not found"
+            ls -la build/reports/jacoco/test || true
+            exit 1
+          fi
 
       - name: SonarCloud scan
         uses: SonarSource/sonarqube-scan-action@v5.3.1
@@ -64,7 +79,10 @@ jobs:
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.organization=dido1043
             -Dsonar.projectKey=dido1043_Stock-Market-Spring
-            -Dsonar.projectBaseDir=StockMarketSpringAPI
             -Dsonar.sources=src/main
             -Dsonar.tests=src/test
-            -Dsonar.java.binaries=build/classes,build/classes/java/main
+            -Dsonar.java.binaries=build/classes/java/main
+            -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml
+            -Dsonar.pullrequest.key=${{ github.event.pull_request.number }}
+            -Dsonar.pullrequest.branch=${{ github.head_ref }}
+            -Dsonar.pullrequest.base=${{ github.base_ref }}
