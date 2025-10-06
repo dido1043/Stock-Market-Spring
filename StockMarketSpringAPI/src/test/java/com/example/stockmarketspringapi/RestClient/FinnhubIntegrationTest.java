@@ -31,6 +31,6 @@ public class FinnhubIntegrationTest {
         mockResponse.setName("Apple Inc");
         mockResponse.setTicker("AAPL");
 
-        assertEquals("Apple Inc", "Apple Inc");
+        assertEquals("Apple Inc", mockResponse.getName());
     }
 }
