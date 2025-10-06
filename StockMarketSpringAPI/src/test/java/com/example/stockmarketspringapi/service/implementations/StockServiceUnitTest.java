@@ -1,4 +1,4 @@
-package com.example.stockmarketspringapi.service;
+package com.example.stockmarketspringapi.service.implementations;
 
 
 import com.example.stockmarketspringapi.RestClient.interfaces.FinnhubService;
@@ -9,7 +9,6 @@ import com.example.stockmarketspringapi.model.dto.StockResponseDto;
 import com.example.stockmarketspringapi.model.entity.Company;
 import com.example.stockmarketspringapi.model.entity.Stock;
 import com.example.stockmarketspringapi.repository.StockRepository;
-import com.example.stockmarketspringapi.service.implementations.StockServiceImpl;
 import com.example.stockmarketspringapi.service.interfaces.CompanyService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
