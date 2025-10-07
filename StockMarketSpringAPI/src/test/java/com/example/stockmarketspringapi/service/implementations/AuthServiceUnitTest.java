@@ -2,6 +2,7 @@ package com.example.stockmarketspringapi.service.implementations;
 
 import com.example.stockmarketspringapi.model.dto.UserDto;
 import com.example.stockmarketspringapi.model.dto.enums.ProviderEnum;
+import com.example.stockmarketspringapi.model.dto.userDtos.LoginUserDto;
 import com.example.stockmarketspringapi.model.entity.User;
 import com.example.stockmarketspringapi.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -70,5 +71,17 @@ public class AuthServiceUnitTest {
         assertThat(result.getId()).isEqualTo(1L);
         assertThat(result.getEmail()).isEqualTo("test@testmil.com");
 
+    }
+
+    @Test
+    void loginTest(){
+        // TODO implement login test
+    }
+
+    @Test
+    void oAuthTest(){
+        LoginUserDto user = new LoginUserDto();
+        user.setEmail("test@testmail.com");
+        user.setPassword("pass12");
     }
 }
