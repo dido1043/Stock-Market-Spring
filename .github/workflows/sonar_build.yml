@@ -1,6 +1,8 @@
 name: SonarCloud
 
 on:
+  push:
+    branches: ['main']
   pull_request:
     branches: ["main"]
 permissions:
@@ -68,4 +70,6 @@ jobs:
             -Dsonar.sources=src/main
             -Dsonar.tests=src/test
             -Dsonar.java.binaries=build/classes,build/classes/java/main
-            -Dsonar.coverage.jacoco.xmlReportPaths="build/reports/jacoco/test/jacocoTestReport.xml"
+            -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml 
+            -Dsonar.branch.name=main
+
