@@ -99,7 +99,7 @@ liquibase {
     activities {
         main {
             changelogFile "src/main/resources/db/changelog/db.changelog-master.yaml"
-            url "jdbc:postgresql://localhost:5431/stock_market_db"
+            url "jdbc:postgresql://localhost:5432/stock_market_db"
             username "postgres"
             password "dido12"
             classpath "build/classes/java/main:build/resources/main"
