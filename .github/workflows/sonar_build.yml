@@ -55,7 +55,7 @@ jobs:
           done
 
       - name: Run tests with coverage
-        run: bash ./gradlew test jacocoTestReport 
+        run: bash ./gradlew --no-daemon clean test jacocoTestReport
 
       - name: SonarCloud scan
         uses: SonarSource/sonarqube-scan-action@v5.3.1
