@@ -62,29 +62,21 @@ dependencies {
     liquibaseRuntime 'org.springframework:spring-tx:6.1.6'
     liquibaseRuntime 'org.springframework:spring-orm:6.1.6'
 }
-test {
-    useJUnitPlatform()
-    systemProperty "java.util.logging.manager", "org.jboss.logmanager.LogManager"
-}
-
 jacoco {
-    toolVersion = '0.8.13'
+    toolVersion = "0.8.10"
 }
 
-jacocoTestReport {
-    dependsOn test
-    executionData(fileTree(buildDir).include("jacoco/test.exec"))
+tasks.test {
+    finalizedBy tasks.jacocoTestReport
+}
+
+tasks.jacocoTestReport {
+    dependsOn tasks.test
     reports {
         xml.required = true
         html.required = true
     }
-    classDirectories.setFrom(
-            fileTree('build/classes/java/main') {
-                include '**/*.class'
-            }
-    )
 }
-
 
 sonarqube {
     properties {
@@ -99,7 +91,7 @@ liquibase {
     activities {
         main {
             changelogFile "src/main/resources/db/changelog/db.changelog-master.yaml"
-            url "jdbc:postgresql://localhost:5431/stock_market_db"
+            url "jdbc:postgresql://localhost:5432/stock_market_db"
             username "postgres"
             password "dido12"
             classpath "build/classes/java/main:build/resources/main"
