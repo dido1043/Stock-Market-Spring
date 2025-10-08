@@ -46,6 +46,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     testImplementation 'org.mockito:mockito-core'
+    testImplementation 'com.squareup.okhttp3:mockwebserver:4.12.0'
     testImplementation 'org.mockito:mockito-inline:5.2.0'
     testImplementation 'org.jboss.logmanager:jboss-logmanager:2.1.0.Final'
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'

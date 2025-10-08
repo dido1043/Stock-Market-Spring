@@ -2,6 +2,7 @@ package com.example.stockmarketspringapi.service.implementations;
 
 import com.example.stockmarketspringapi.model.dto.UserDto;
 import com.example.stockmarketspringapi.model.dto.enums.ProviderEnum;
+import com.example.stockmarketspringapi.model.dto.resp.LoginResponse;
 import com.example.stockmarketspringapi.model.dto.userDtos.LoginUserDto;
 import com.example.stockmarketspringapi.model.entity.User;
 import com.example.stockmarketspringapi.repository.UserRepository;
@@ -13,7 +14,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -75,13 +82,94 @@ public class AuthServiceUnitTest {
 
     @Test
     void loginTest(){
-        // TODO implement login test
+        LoginUserDto loginUser = new LoginUserDto();
+        loginUser.setEmail("test@testmail.com");
+        loginUser.setPassword("pass12");
+
+        User user = new User();
+        user.setEmail("test@testmail.com");
+        user.setUsername("test_user");
+
+        Authentication authentication = mock(Authentication.class);
+        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+                .thenReturn(authentication);
+
+        when(userRepository.findByEmail("test@testmail.com")).thenReturn(Optional.of(user));
+
+        User result = authService.login(loginUser);
+
+        verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
+        verify(userRepository).findByEmail("test@testmail.com");
+
+        assertThat(result).isSameAs(user);
+
     }
 
     @Test
-    void oAuthTest(){
-        LoginUserDto user = new LoginUserDto();
-        user.setEmail("test@testmail.com");
-        user.setPassword("pass12");
+    void login_withEmptyPassword() {
+        LoginUserDto login = new LoginUserDto();
+        login.setEmail("test@testmail.com");
+        login.setPassword("   "); // blank
+
+        assertThatThrownBy(() -> authService.login(login))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Password cannot be empty");
+
+        verifyNoInteractions(authenticationManager);
+        verifyNoInteractions(userRepository);
+    }
+
+    @Test
+    void oAuthLogin_existingUser() {
+        OAuth2AuthenticationToken token = mock(OAuth2AuthenticationToken.class);
+        OAuth2User principal = mock(OAuth2User.class);
+        when(token.getPrincipal()).thenReturn(principal);
+        when(principal.getAttribute("email")).thenReturn("test@testmail.com");
+        when(principal.getAttribute("name")).thenReturn("Google user");
+
+        User existing = new User();
+        existing.setEmail("test@testmail.com");
+        existing.setUsername("test_user");
+
+        when(userRepository.findByEmail("test@testmail.com")).thenReturn(Optional.of(existing));
+
+        User result = authService.oAuthLogin(token);
+
+        verify(userRepository).findByEmail("test@testmail.com");
+        verify(userRepository, never()).save(any());
+        assertThat(result).isSameAs(existing);
+    }
+
+    @Test
+    void oAuthLogin_newUser() {
+        OAuth2AuthenticationToken token = mock(OAuth2AuthenticationToken.class);
+        OAuth2User principal = mock(OAuth2User.class);
+        when(token.getPrincipal()).thenReturn(principal);
+        when(principal.getAttribute("email")).thenReturn("test@testmail.com");
+        when(principal.getAttribute("name")).thenReturn("New user");
+
+        when(userRepository.findByEmail("test@testmail.com")).thenReturn(Optional.empty());
+
+        ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
+
+        User saved = new User();
+        saved.setId(99L);
+        saved.setEmail("test@testmail.com");
+        saved.setUsername("New user");
+        saved.setProviderType(ProviderEnum.GOOGLE);
+
+        when(userRepository.save(any(User.class))).thenReturn(saved);
+
+        User result = authService.oAuthLogin(token);
+
+        verify(userRepository).findByEmail("test@testmail.com");
+        verify(userRepository).save(captor.capture());
+
+        User toSave = captor.getValue();
+        assertThat(toSave.getEmail()).isEqualTo("test@testmail.com");
+        assertThat(toSave.getUsername()).isEqualTo("New user");
+        assertThat(toSave.getProviderType()).isEqualTo(ProviderEnum.GOOGLE);
+
+        assertThat(result.getId()).isEqualTo(99L);
     }
 }
