@@ -1,6 +1,6 @@
 package com.example.stockmarketspringapi.controller;
 
-import com.example.stockmarketspringapi.RestClient.interfaces.FinnhubService;
+import com.example.stockmarketspringapi.client.interfaces.FinnhubService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
