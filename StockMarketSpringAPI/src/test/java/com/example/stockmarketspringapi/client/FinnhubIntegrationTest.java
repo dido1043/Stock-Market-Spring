@@ -1,4 +1,4 @@
-package com.example.stockmarketspringapi.RestClient;
+package com.example.stockmarketspringapi.client;
 
 import com.example.stockmarketspringapi.model.dto.FinnhubStockDto;
 import org.junit.jupiter.api.Test;

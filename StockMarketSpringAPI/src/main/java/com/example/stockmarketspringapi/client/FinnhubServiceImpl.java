@@ -1,6 +1,6 @@
-package com.example.stockmarketspringapi.RestClient;
+package com.example.stockmarketspringapi.client;
 
-import com.example.stockmarketspringapi.RestClient.interfaces.FinnhubService;
+import com.example.stockmarketspringapi.client.interfaces.FinnhubService;
 import com.example.stockmarketspringapi.model.dto.FinnhubStockDto;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;

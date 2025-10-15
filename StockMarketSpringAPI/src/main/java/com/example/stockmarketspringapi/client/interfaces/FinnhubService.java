@@ -1,4 +1,4 @@
-package com.example.stockmarketspringapi.RestClient.interfaces;
+package com.example.stockmarketspringapi.client.interfaces;
 
 import com.example.stockmarketspringapi.model.dto.FinnhubStockDto;
 
