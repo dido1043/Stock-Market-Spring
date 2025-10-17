@@ -30,7 +30,7 @@ public class FeignErrorDecoder implements ErrorDecoder {
             case NOT_FOUND:
                 return new NotFoundException("Resource not found");
             case INTERNAL_SERVER_ERROR:
-                return new RuntimeException("Internal server error");
+                return new InternalServerException("Internal server error");
             default:
                 return new Exception("Unexpected error: " + responseBody);
         }
