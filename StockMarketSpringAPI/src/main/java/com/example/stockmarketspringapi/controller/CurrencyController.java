@@ -29,9 +29,4 @@ public class CurrencyController {
     public ResponseEntity<List<CurrencyDto>> getCurrency() {
         return ResponseEntity.ok(currencyService.getAllCurrencies());
     }
-
-    @GetMapping("/eur")
-    public ResponseEntity<StockResponseDto> calculateCurrencyInEur() {
-        return ResponseEntity.ok(calculationService.calculatePriceInEur());
-    }
 }

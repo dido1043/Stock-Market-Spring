@@ -4,9 +4,8 @@ import com.example.stockmarketspringapi.model.dto.StockDto;
 import com.example.stockmarketspringapi.model.dto.StockResponseDto;
 import com.example.stockmarketspringapi.model.entity.Stock;
 
-public interface CalculationService {
+import java.math.BigDecimal;
 
-    StockResponseDto calculatePriceInEur();
-    StockDto calculatePriceInUsd();
-    StockDto calculatePriceInCny();
+public interface CalculationService {
+    double  CurrencyCalculate(BigDecimal amount, String sign);
 }

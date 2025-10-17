@@ -7,7 +7,13 @@ public class StockResponseDto {
 
     private Long companyId;
     private BigDecimal marketCapitalization;
+    private BigDecimal marketCapitalizationCny;
+    private BigDecimal marketCapitalizationUsd;
+    private BigDecimal marketCapitalizationEur;
     private BigDecimal shareOutstanding;
+    private BigDecimal shareOutstandingCny;
+    private BigDecimal shareOutstandingUsd;
+    private BigDecimal shareOutstandingEur;
     private LocalDateTime createdAt;
 
 
@@ -41,5 +47,53 @@ public class StockResponseDto {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public BigDecimal getMarketCapitalizationCny() {
+        return marketCapitalizationCny;
+    }
+
+    public void setMarketCapitalizationCny(BigDecimal marketCapitalizationCny) {
+        this.marketCapitalizationCny = marketCapitalizationCny;
+    }
+
+    public BigDecimal getMarketCapitalizationUsd() {
+        return marketCapitalizationUsd;
+    }
+
+    public void setMarketCapitalizationUsd(BigDecimal marketCapitalizationUsd) {
+        this.marketCapitalizationUsd = marketCapitalizationUsd;
+    }
+
+    public BigDecimal getMarketCapitalizationEur() {
+        return marketCapitalizationEur;
+    }
+
+    public void setMarketCapitalizationEur(BigDecimal marketCapitalizationEur) {
+        this.marketCapitalizationEur = marketCapitalizationEur;
+    }
+
+    public BigDecimal getShareOutstandingCny() {
+        return shareOutstandingCny;
+    }
+
+    public void setShareOutstandingCny(BigDecimal shareOutstandingCny) {
+        this.shareOutstandingCny = shareOutstandingCny;
+    }
+
+    public BigDecimal getShareOutstandingUsd() {
+        return shareOutstandingUsd;
+    }
+
+    public void setShareOutstandingUsd(BigDecimal shareOutstandingUsd) {
+        this.shareOutstandingUsd = shareOutstandingUsd;
+    }
+
+    public BigDecimal getShareOutstandingEur() {
+        return shareOutstandingEur;
+    }
+
+    public void setShareOutstandingEur(BigDecimal shareOutstandingEur) {
+        this.shareOutstandingEur = shareOutstandingEur;
     }
 }

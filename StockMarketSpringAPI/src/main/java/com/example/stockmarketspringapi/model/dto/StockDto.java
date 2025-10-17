@@ -11,10 +11,15 @@ public class StockDto {
 
     @NotNull(message = "Market capitalization cannot be null")
     private BigDecimal marketCapitalization;
+    private BigDecimal marketCapEur;
+    private BigDecimal marketCapUsd;
+    private BigDecimal marketCapCny;
 
     @NotNull(message = "Share outstanding cannot be null")
     private BigDecimal shareOutstanding;
-
+    private BigDecimal shareOutstandingEur;
+    private BigDecimal shareOutstandingUsd;
+    private BigDecimal shareOutstandingCny;
     private LocalDateTime createdAt;
 
 
@@ -54,6 +59,54 @@ public class StockDto {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public BigDecimal getMarketCapEur() {
+        return marketCapEur;
+    }
+
+    public void setMarketCapEur(BigDecimal marketCapEur) {
+        this.marketCapEur = marketCapEur;
+    }
+
+    public BigDecimal getMarketCapUsd() {
+        return marketCapUsd;
+    }
+
+    public void setMarketCapUsd(BigDecimal marketCapUsd) {
+        this.marketCapUsd = marketCapUsd;
+    }
+
+    public BigDecimal getMarketCapCny() {
+        return marketCapCny;
+    }
+
+    public void setMarketCapCny(BigDecimal marketCapCny) {
+        this.marketCapCny = marketCapCny;
+    }
+
+    public BigDecimal getShareOutstandingEur() {
+        return shareOutstandingEur;
+    }
+
+    public void setShareOutstandingEur(BigDecimal shareOutstandingEur) {
+        this.shareOutstandingEur = shareOutstandingEur;
+    }
+
+    public BigDecimal getShareOutstandingUsd() {
+        return shareOutstandingUsd;
+    }
+
+    public void setShareOutstandingUsd(BigDecimal shareOutstandingUsd) {
+        this.shareOutstandingUsd = shareOutstandingUsd;
+    }
+
+    public BigDecimal getShareOutstandingCny() {
+        return shareOutstandingCny;
+    }
+
+    public void setShareOutstandingCny(BigDecimal shareOutstandingCny) {
+        this.shareOutstandingCny = shareOutstandingCny;
     }
 
     public String getName() {

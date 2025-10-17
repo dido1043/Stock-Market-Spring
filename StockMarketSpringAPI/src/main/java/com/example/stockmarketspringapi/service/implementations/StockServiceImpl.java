@@ -1,27 +1,35 @@
 package com.example.stockmarketspringapi.service.implementations;
 
+import com.example.stockmarketspringapi.client.interfaces.CurrencyClient;
 import com.example.stockmarketspringapi.client.interfaces.FinnhubService;
 import com.example.stockmarketspringapi.exception.NotFoundException;
+import com.example.stockmarketspringapi.model.dto.CurrencyDto;
 import com.example.stockmarketspringapi.model.dto.FinnhubStockDto;
 import com.example.stockmarketspringapi.model.dto.StockDto;
 import com.example.stockmarketspringapi.model.dto.StockResponseDto;
 import com.example.stockmarketspringapi.model.entity.Company;
 import com.example.stockmarketspringapi.model.entity.Stock;
 import com.example.stockmarketspringapi.repository.StockRepository;
+import com.example.stockmarketspringapi.service.interfaces.CalculationService;
 import com.example.stockmarketspringapi.service.interfaces.CompanyService;
 import com.example.stockmarketspringapi.service.interfaces.StockService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import feign.Response;
+import feign.Util;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class StockServiceImpl implements StockService {
   private final CompanyService companyService;
   private final StockRepository stockRepository;
   private final FinnhubService finnhubService;
+  private final CalculationService calculationService;
 
   private final ModelMapper mapper;
 
@@ -29,10 +37,12 @@ public class StockServiceImpl implements StockService {
   public StockServiceImpl(
       CompanyService companyService,
       StockRepository stockRepository,
-      FinnhubService finnhubService) {
+      FinnhubService finnhubService,
+      CalculationService calculationService) {
     this.companyService = companyService;
     this.stockRepository = stockRepository;
     this.finnhubService = finnhubService;
+    this.calculationService = calculationService;
 
     this.mapper = new ModelMapper();
   }
@@ -54,12 +64,19 @@ public class StockServiceImpl implements StockService {
       FinnhubStockDto finnhubStockDto = finnhubService.getApiData(symbol);
 
       stockDto = convertToStockDto(finnhubStockDto, company);
+
       saveToDb(stockDto, company);
     } else {
       stockDto = mapToDtoForExistingStock(existing, company);
     }
 
     StockResponseDto stockResponseDto = mapper.map(stockDto, StockResponseDto.class);
+    stockResponseDto.setMarketCapitalizationEur(existing.getMarketCapEur());
+    stockResponseDto.setMarketCapitalizationUsd(existing.getMarketCapUsd());
+    stockResponseDto.setMarketCapitalizationCny(existing.getMarketCapCny());
+    stockResponseDto.setShareOutstandingEur(existing.getShareOutstandingEur());
+    stockResponseDto.setShareOutstandingUsd(existing.getShareOutstandingUsd());
+    stockResponseDto.setShareOutstandingCny(existing.getShareOutstandingCny());
     return stockResponseDto;
   }
 
@@ -68,7 +85,13 @@ public class StockServiceImpl implements StockService {
 
     stock.setCompany(company);
     stock.setMarketCapitalization(stockDto.getMarketCapitalization());
+    stock.setMarketCapEur(new BigDecimal(calculationService.CurrencyCalculate(stockDto.getMarketCapitalization(), "EUR")));
+    stock.setMarketCapUsd(new BigDecimal(calculationService.CurrencyCalculate(stockDto.getMarketCapitalization(), "USD")));
+    stock.setMarketCapCny(new BigDecimal(calculationService.CurrencyCalculate(stockDto.getMarketCapitalization(), "CNY")));
     stock.setShareOutstanding(stockDto.getShareOutstanding());
+    stock.setShareOutstandingEur(new BigDecimal(calculationService.CurrencyCalculate(stockDto.getShareOutstanding(), "EUR")));
+    stock.setShareOutstandingUsd(new BigDecimal(calculationService.CurrencyCalculate(stockDto.getShareOutstanding(), "USD")));
+    stock.setShareOutstandingCny(new BigDecimal(calculationService.CurrencyCalculate(stockDto.getShareOutstanding(), "CNY")));
     stock.setCreatedAt(stockDto.getCreatedAt());
     stockRepository.save(stock);
   }
@@ -76,6 +99,7 @@ public class StockServiceImpl implements StockService {
   private boolean isSavedToday(Stock stock) {
     return stock.getCreatedAt().toLocalDate().equals(LocalDateTime.now().toLocalDate());
   }
+
   @Override
     public StockDto convertToStockDto(FinnhubStockDto stockData, Company company){
         StockDto stockDto = new StockDto();
