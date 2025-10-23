@@ -5,9 +5,6 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.27.xsd">
 
-
-
-
     <include file="../migration/01_create_company_table.xml" relativeToChangelogFile="true"/>
     <include file="../migration/02_create_stock_table.xml" relativeToChangelogFile="true"/>
     <include file="../migration/03_create_users_table.xml" relativeToChangelogFile="true"/>
