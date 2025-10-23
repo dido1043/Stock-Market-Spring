@@ -1,7 +1,7 @@
 package com.example.stockmarketspringapi.service.implementations;
 
 import com.example.stockmarketspringapi.client.interfaces.FinnhubService;
-import com.example.stockmarketspringapi.exception.NotFoundException;
+import com.example.stockmarketspringapi.exception.errors.NotFoundException;
 import com.example.stockmarketspringapi.model.dto.FinnhubStockDto;
 import com.example.stockmarketspringapi.model.dto.StockDto;
 import com.example.stockmarketspringapi.model.dto.StockResponseDto;

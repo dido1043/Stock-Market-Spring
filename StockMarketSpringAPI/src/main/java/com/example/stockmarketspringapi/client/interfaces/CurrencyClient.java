@@ -1,11 +1,12 @@
 package com.example.stockmarketspringapi.client.interfaces;
 
 import com.example.stockmarketspringapi.config.FeignConfig;
-import com.example.stockmarketspringapi.exception.FeignErrorDecoder;
-import feign.Response;
+import com.example.stockmarketspringapi.model.dto.CurrencyDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 @Component
 @FeignClient(
@@ -15,5 +16,5 @@ import org.springframework.web.bind.annotation.GetMapping;
 public interface CurrencyClient {
 
     @GetMapping("/api/currency/get")
-    Response getCurrency();
+    List<CurrencyDto> getCurrency();
 }

@@ -1,9 +1,7 @@
 package com.example.stockmarketspringapi.service.implementations;
 
-import com.example.stockmarketspringapi.client.interfaces.CurrencyClient;
 import com.example.stockmarketspringapi.client.interfaces.FinnhubService;
-import com.example.stockmarketspringapi.exception.NotFoundException;
-import com.example.stockmarketspringapi.model.dto.CurrencyDto;
+import com.example.stockmarketspringapi.exception.errors.NotFoundException;
 import com.example.stockmarketspringapi.model.dto.FinnhubStockDto;
 import com.example.stockmarketspringapi.model.dto.StockDto;
 import com.example.stockmarketspringapi.model.dto.StockResponseDto;
@@ -13,16 +11,12 @@ import com.example.stockmarketspringapi.repository.StockRepository;
 import com.example.stockmarketspringapi.service.interfaces.CalculationService;
 import com.example.stockmarketspringapi.service.interfaces.CompanyService;
 import com.example.stockmarketspringapi.service.interfaces.StockService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import feign.Response;
-import feign.Util;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class StockServiceImpl implements StockService {

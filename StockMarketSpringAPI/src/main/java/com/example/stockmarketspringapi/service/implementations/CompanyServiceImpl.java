@@ -1,6 +1,6 @@
 package com.example.stockmarketspringapi.service.implementations;
 
-import com.example.stockmarketspringapi.exception.NotFoundException;
+import com.example.stockmarketspringapi.exception.errors.NotFoundException;
 import com.example.stockmarketspringapi.model.dto.CompanyDto;
 import com.example.stockmarketspringapi.model.entity.Company;
 import com.example.stockmarketspringapi.repository.CompanyRepository;

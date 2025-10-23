@@ -1,16 +1,19 @@
-package com.example.stockmarketspringapi.exception;
+package com.example.stockmarketspringapi.exception.errors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class NotFoundException extends RuntimeException {
-    private String message;
-
-    public NotFoundException() {}
+    public NotFoundException() {
+        super("Resource not found");
+    }
 
     public NotFoundException(String message) {
         super(message);
     }
 
+    public NotFoundException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }
