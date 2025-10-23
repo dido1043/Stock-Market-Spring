@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.27.xsd">
+
+    <changeSet id="4" author="dido">
+        <addColumn tableName="stocks">
+            <column name="market_capitalization_eur" type="NUMERIC(20,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="market_capitalization_usd" type="NUMERIC(20,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="market_capitalization_cny" type="NUMERIC(20,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="share_outstanding_eur" type="NUMERIC(20,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="share_outstanding_usd" type="NUMERIC(20,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="share_outstanding_cny" type="NUMERIC(20,2)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

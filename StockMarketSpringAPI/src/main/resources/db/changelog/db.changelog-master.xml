@@ -5,54 +5,11 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.27.xsd">
 
-    <changeSet id="1" author="dido">
-        <createTable tableName="company">
-            <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="country" type="VARCHAR(2)"/>
-            <column name="created_at" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
-            <column name="email" type="VARCHAR(255)"/>
-            <column name="company_name" type="VARCHAR(255)"/>
-            <column name="symbol" type="VARCHAR(255)"/>
-            <column name="website" type="VARCHAR(255)"/>
-        </createTable>
-    </changeSet>
 
-    <changeSet id="2" author="dido">
-        <createTable tableName="stocks">
-            <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="created_at" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
-            <column name="market_capitalization" type="NUMERIC(20,2)"/>
-            <column name="share_outstanding" type="NUMERIC(20,2)"/>
-            <column name="company_id" type="BIGINT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
 
-        <addForeignKeyConstraint
-                baseTableName="stocks"
-                baseColumnNames="company_id"
-                referencedTableName="company"
-                referencedColumnNames="id"
-                constraintName="fk_stocks_company"/>
-    </changeSet>
 
-    <changeSet id="3" author="dido">
-        <createTable tableName="users">
-            <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="username" type="VARCHAR(255)"/>
-            <column name="email" type="VARCHAR(255)"/>
-            <column name="passwordHash" type="VARCHAR(255)"/>
-            <column name="provider_type" type="VARCHAR(50)"/>
-        </createTable>
-    </changeSet>
-
-    <include file="db/changelog/2025/10/14-01-changelog.xml"/>
-    <include file="db/changelog/2025/10/16-01-changelog.xml"/>
-
+    <include file="../migration/01_create_company_table.xml" relativeToChangelogFile="true"/>
+    <include file="../migration/02_create_stock_table.xml" relativeToChangelogFile="true"/>
+    <include file="../migration/03_create_users_table.xml" relativeToChangelogFile="true"/>
+    <include file="../migration/04_add_currency_columns_to_stock.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

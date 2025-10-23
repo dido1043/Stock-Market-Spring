@@ -13,6 +13,8 @@ import java.nio.charset.StandardCharsets;
 
 public class FeignErrorDecoder implements ErrorDecoder {
     private static final Logger logger = LoggerFactory.getLogger(FeignErrorDecoder.class);
+    private final ErrorDecoder defaultErrorDecoder = new Default();
+
     @Override
     public Exception decode(String methodKey, Response response) {
         HttpStatus status = HttpStatus.valueOf(response.status());
@@ -30,16 +32,20 @@ public class FeignErrorDecoder implements ErrorDecoder {
             case NOT_FOUND:
                 return new NotFoundException("Resource not found");
             case INTERNAL_SERVER_ERROR:
-                return new InternalServerException("Internal server error");
+                return new RuntimeException("Internal server error: " + responseBody);
+            case SERVICE_UNAVAILABLE:
+            case BAD_GATEWAY:
+            case GATEWAY_TIMEOUT:
+                logger.error("Microservice is unavailable. Method: {}, Status: {}", methodKey, status);
+                return new InternalServerException("Microservice is currently unavailable. Please try again later.");
             default:
-                return new Exception("Unexpected error: " + responseBody);
+                return defaultErrorDecoder.decode(methodKey, response);
         }
     }
     private String extractResponseBody(Response response) {
         if (response.body() == null) {
             return "No response body";
         }
-
         try {
             return new String(response.body().asInputStream().readAllBytes(), StandardCharsets.UTF_8);
         } catch (IOException ex) {
