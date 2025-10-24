@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/company")
 public class CompanyController {
@@ -17,17 +19,17 @@ public class CompanyController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllCompanies() {
+    public ResponseEntity<List<CompanyDto>> getAllCompanies() {
         return ResponseEntity.status(HttpStatus.OK).body(companyService.getAllCompanies());
     }
 
     @PostMapping
-    public ResponseEntity<?> addCompany(CompanyDto companyDto) {
+    public ResponseEntity<CompanyDto> addCompany(CompanyDto companyDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(companyService.postCompany(companyDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateCompany(@PathVariable Long id, CompanyDto companyDto) {
+    public ResponseEntity<CompanyDto> updateCompany(@PathVariable Long id, CompanyDto companyDto) {
         return ResponseEntity.status(HttpStatus.OK).body(companyService.editCompany(id, companyDto));
     }
 }

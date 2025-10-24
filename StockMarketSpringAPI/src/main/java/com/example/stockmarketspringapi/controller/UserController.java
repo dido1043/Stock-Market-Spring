@@ -3,6 +3,7 @@ package com.example.stockmarketspringapi.controller;
 import com.example.stockmarketspringapi.model.dto.userDtos.LoginUserDto;
 import com.example.stockmarketspringapi.model.dto.UserDto;
 import com.example.stockmarketspringapi.model.dto.resp.LoginResponse;
+import com.example.stockmarketspringapi.model.dto.userDtos.RegisterUserDto;
 import com.example.stockmarketspringapi.model.entity.User;
 import com.example.stockmarketspringapi.service.JwtService;
 import com.example.stockmarketspringapi.service.interfaces.AuthService;
@@ -27,7 +28,7 @@ public class UserController {
   }
 
   @PostMapping("/register")
-  public ResponseEntity<?> register(@RequestBody UserDto user) {
+  public ResponseEntity<User> register(@RequestBody UserDto user) {
     return ResponseEntity.status(201).body(authService.register(user));
   }
 

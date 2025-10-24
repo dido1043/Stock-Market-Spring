@@ -39,9 +39,9 @@ public class FeignConfig {
     @Bean
     public Request.Options requestOptions() {
         return new Request.Options(
-                10, TimeUnit.SECONDS,  // connect timeout
-                60, TimeUnit.SECONDS,  // read timeout
-                true                   // follow redirects
+                10, TimeUnit.SECONDS,
+                60, TimeUnit.SECONDS,
+                true
         );
     }
 
