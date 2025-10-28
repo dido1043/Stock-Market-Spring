@@ -33,7 +33,7 @@ public class UserController {
   }
 
   @PostMapping("/login")
-  public ResponseEntity<?> login(@RequestBody LoginUserDto loginUserDto) {
+  public ResponseEntity<LoginResponse> login(@RequestBody LoginUserDto loginUserDto) {
     User authenticatedUser = authService.login(loginUserDto);
 
     String jwtToken = jwtService.generateToken(authenticatedUser);
@@ -47,7 +47,6 @@ public class UserController {
   @GetMapping("/oauth2/login")
   public ResponseEntity<?> oAuthLogin(HttpServletResponse httpServletResponse) throws IOException {
     httpServletResponse.sendRedirect("/oauth2/authorization/google");
-    //User user = authService.oAuthLogin(token);
     return ResponseEntity.ok("Redirecting...");
   }
 
